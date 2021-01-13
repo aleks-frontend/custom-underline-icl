@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Underline [ICL]</title>
+    <style>
+        [data-cu-hook="input"] {
+            display: none;
+        }
+
+        [data-cu-hook="output"] span {
+            display: inline-block;
+            position: relative;
+            padding-bottom: 0.2em;
+        }
+
+        [data-cu-hook="output"] span::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div data-cu-hook="input">
+        <token-value>
+            Some text, line 1.<br>
+            Some other text, bla bla.<br>
+            label: name
+        </token-value>
+    </div>
+
+    <div data-cu-hook="output"></div>
+    <script src="js/custom-underline.js"></script>
+</body>
+
+</html>

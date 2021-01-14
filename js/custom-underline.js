@@ -1,9 +1,15 @@
 function customUnderline() {
-    const inputs = document.querySelectorAll('[data-cu-hook="input"]');
-    const outputDiv = document.querySelector('[data-cu-hook="output"]');
+    const sources = document.querySelectorAll('[data-cu-src-id]');
 
-    for (const input of inputs) {
-        const lines = input.querySelector('token-value').innerHTML.split('<br>');
+    for (const src of sources) {
+        const srcId = src.dataset.cuSrcId;
+        let lines;
+
+        if (src.querySelector('token-value') !== null) {
+            lines = src.querySelector('token-value').innerHTML.split('<br>');
+        } else {
+            lines = src.innerHTML.split('<br>');
+        }
 
         const data = [];
 
@@ -29,7 +35,7 @@ function customUnderline() {
             output += lineHTML;
         }
 
-        outputDiv.innerHTML = output;
+        document.querySelector(`[data-cu-output-id="${srcId}"]`).innerHTML = output;;
     }
 }
 

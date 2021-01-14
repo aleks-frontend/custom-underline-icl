@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <title>Custom Underline [ICL]</title>
     <style>
-        [data-cu-hook="input"] {
+        [data-cu-src-id] {
             display: none;
         }
 
-        [data-cu-hook="output"] span {
+        [data-cu-output-id] span {
             display: inline-block;
             position: relative;
             padding-bottom: 0.2em;
         }
 
-        [data-cu-hook="output"] span::after {
+        [data-cu-output-id] span::after {
             content: '';
             display: block;
             position: absolute;
@@ -29,15 +29,24 @@
 </head>
 
 <body>
-    <div data-cu-hook="input">
+    <div data-cu-src-id="1">
         <token-value>
             Some text, line 1.<br>
             Some other text, bla bla.<br>
             label: name
         </token-value>
     </div>
+    <div data-cu-output-id="1"></div>
 
-    <div data-cu-hook="output"></div>
+    <hr>
+
+    <div data-cu-src-id="2">
+        <token-value>
+            Some other text, bla bla.<br>
+            label: name
+        </token-value>
+    </div>
+    <div data-cu-output-id="2"></div>
     <script src="js/custom-underline.js"></script>
 </body>
 

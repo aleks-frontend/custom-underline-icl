@@ -3,24 +3,33 @@ function customUnderline() {
 
     for (const src of sources) {
         const srcId = src.dataset.cuSrcId;
-        let lines;
+        let output = '';
+        let linesNode;
+        const data = [];
+        const specialChars = {
+            '&amp;': '&',
+            '&nbsp;': ' '
+        };
+
+        const replaceSpecialChars = line => line.replace(/&amp;|&nbsp;/g, matched => specialChars[matched]);
 
         if (src.querySelector('token-value') !== null) {
-            lines = src.querySelector('token-value').innerHTML.split('<br>');
+            linesNode = src.querySelector('token-value')
         } else {
-            lines = src.innerHTML.split('<br>');
+            linesNode = src;
         }
 
-        const data = [];
+        const lines = linesNode.innerHTML.split('<br>').map(replaceSpecialChars);
 
         for (const [index, line] of lines.entries()) {
-            const words = line.split(/[,.:]+/g).map(word => word.trim()).filter(word => word !== '');
-            const punct = line.match(/[,.:]+/g);
+            const words = line
+                .split(/[!&,.:;"'?]+/g)
+                .filter(word => word !== '')
+                .map(word => word.replace(/ /g, '&nbsp;'));
+            const punct = line.match(/[!&,.:;"'?]+/g);
 
             data.push({ words, punct });
         }
-
-        let output = '';
 
         for (const line of data) {
             const renderSegments = (word, index) => {
@@ -38,5 +47,3 @@ function customUnderline() {
         document.querySelector(`[data-cu-output-id="${srcId}"]`).innerHTML = output;;
     }
 }
-
-customUnderline();
